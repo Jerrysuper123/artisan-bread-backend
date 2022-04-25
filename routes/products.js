@@ -64,4 +64,69 @@ router.get("/:product_id/update", async (req, res) => {
   });
 });
 
+router.post("/:product_id/update", async (req, res) => {
+  //retrieve the product row for us to update
+  let product;
+  try {
+    product = await Product.where({
+      id: req.params.product_id,
+    }).fetch({
+      require: true,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+
+  //process the updated info from admin user by updating the product row
+  const productForm = createProductForm();
+  productForm.handle(req, {
+    success: async (form) => {
+      product.set(form.data);
+      // put await to save data first before redirecting to product page
+      await product.save();
+      res.redirect("/products");
+    },
+    error: async (form) => {
+      res.render("products/update", {
+        form: form.toHTML(bootstrapField),
+        product: product.toJSON(),
+      });
+    },
+  });
+});
+
+/*delete product */
+router.get("/:product_id/delete", async (req, res) => {
+  let product;
+  try {
+    product = await Product.where({
+      id: req.params.product_id,
+    }).fetch({
+      require: true,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+
+  res.render("products/delete", {
+    product: product.toJSON(),
+  });
+});
+
+router.post("/:product_id/delete", async (req, res) => {
+  let product;
+  try {
+    product = await Product.where({
+      id: req.params.product_id,
+    }).fetch({
+      require: true,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+
+  await product.destroy();
+  res.redirect("/products");
+});
+
 module.exports = router;
