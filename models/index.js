@@ -4,4 +4,8 @@ const Product = bookshelf.model("Product", {
   tableName: "products",
 });
 
-module.exports = { Product };
+const Flavour = bookshelf.model("Flavour", {
+  tableName: "flavours",
+});
+
+module.exports = { Product, Flavour };
