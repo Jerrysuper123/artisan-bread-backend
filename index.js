@@ -23,10 +23,12 @@ app.use(
   })
 );
 
+const landingRoutes = require("./routes/landing");
 async function main() {
-  app.get("/", (req, res) => {
-    res.send("alive");
-  });
+  //   app.get("/", (req, res) => {
+  //     res.send("alive");
+  //   });
+  app.use("/admin", landingRoutes);
 }
 
 main();
