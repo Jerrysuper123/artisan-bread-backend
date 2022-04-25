@@ -28,7 +28,7 @@ async function main() {
   //   app.get("/", (req, res) => {
   //     res.send("alive");
   //   });
-  app.use("/admin", landingRoutes);
+  app.use("/landing", landingRoutes);
 }
 
 main();

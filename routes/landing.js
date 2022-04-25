@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/login", (req, res) => {
-  res.send("landing page");
+router.get("/", (req, res) => {
+  res.render("landing/index");
 });
 
 module.exports = router;
