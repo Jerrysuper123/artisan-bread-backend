@@ -24,11 +24,13 @@ app.use(
 );
 
 const adminRoutes = require("./routes/admin");
+const productRoutes = require("./routes/products");
 async function main() {
   //   app.get("/", (req, res) => {
   //     res.send("alive");
   //   });
   app.use("/admin", adminRoutes);
+  app.use("/products", productRoutes);
 }
 
 main();

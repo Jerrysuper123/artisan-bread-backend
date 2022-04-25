@@ -9,9 +9,9 @@ router.get("/orders", (req, res) => {
   res.render("admin/orders");
 });
 
-router.get("/products", (req, res) => {
-  res.render("admin/products");
-});
+// router.get("/products", (req, res) => {
+//   res.render("admin/products");
+// });
 
 router.get("/users", (req, res) => {
   res.render("admin/users");
