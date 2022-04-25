@@ -1,0 +1,122 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;1,300;1,400;1,500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lobster+Two:ital@1&display=swap");
+/*font family setting*/
+html {
+    font-family: "Montserrat", sans-serif !important;
+}
+
+.highlightText {
+    color: #e27d60 !important;
+}
+
+.logoText {
+    font-family: "Lobster Two", cursive;
+    font-size: 2rem;
+    color: #e27d60 !important;
+    /* border-radius: 3rem;
+  width: 3rem;
+  height: 3rem;
+  background-color:#8AA6bf; */
+}
+
+.subText {
+    font-family: "Montserrat", sans-serif !important;
+    color: grey;
+    font-size: 0.7rem;
+    font-style: italic;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: "Roboto", sans-serif !important;
+}
+
+/*text color setting*/
+
+.primaryColor {
+    color: #d98e04 !important;
+}
+
+.secondaryColor {
+    color: #04bdad !important;
+}
+
+.accentOneColor {
+    color: #8aa6bf !important;
+}
+
+.accentTwoColor {
+    color: #f2cb05 !important;
+}
+
+.accentThreeColor {
+    color: #f15e1a !important;
+}
+
+/*background color setting*/
+
+.primaryBgColor {
+    background-color: #d98e04;
+}
+
+.secondaryBgColor {
+    background-color: #04bdad !important;
+}
+
+.accentOneBgColor {
+    background-color: #8aa6bf !important;
+}
+
+.accentTwoBgColor {
+    background-color: #f2cb05 !important;
+}
+
+.accentThreeBgColor {
+    background-color: #f15e1a !important;
+}
+
+.customBtn {
+    border-radius: 3rem;
+    border: 2px solid;
+    font-weight: 400;
+    padding: 0.3rem 1rem;
+}
+
+.customBtnPrimary {
+    color: white;
+    background-color: #d98e04;
+}
+
+.customBtnPrimary:hover {
+    color: #d98e04;
+    background-color: white;
+}
+
+.customBtnSecondary {
+    color: white;
+    background-color: #04bdad;
+}
+
+.customBtnSecondary:hover {
+    color: #04bdad;
+    background-color: white;
+}
+
+.navbar {
+    background-color: white !important;
+}
+
+.iconImage {
+    width: 1.5rem;
+    margin-bottom: -1.3rem;
+    margin-left: 5rem;
+}
+
+.logoSubText {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: -0.8rem;
+}
