@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Product } = require("../models");
+const { Product, Flavour } = require("../models");
 const { bootstrapField, createProductForm } = require("../forms");
 
 /*retrieve all products and display it */
@@ -12,9 +12,19 @@ router.get("/", async (req, res) => {
   });
 });
 
+const fetchAllFlavours = async () => {
+  const allFlavours = await Flavour.fetchAll().map((f) => {
+    return [f.get("id"), f.get("flavour")];
+  });
+  return allFlavours;
+};
+
 /*create products*/
 router.get("/create", async (req, res) => {
-  const productForm = createProductForm();
+  // fetch all flavours
+  const allFlavours = await fetchAllFlavours();
+
+  const productForm = createProductForm(allFlavours);
   res.render("products/create", {
     form: productForm.toHTML(bootstrapField),
   });
