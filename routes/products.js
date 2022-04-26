@@ -67,6 +67,12 @@ router.post("/create", async (req, res) => {
       if (ingredients) {
         await product.ingredients().attach(ingredients.split(","));
       }
+
+      req.flash(
+        "success_messages",
+        `New Product ${product.get("name")} has been created`
+      );
+
       res.redirect("/products");
     },
     error: async (form) => {

@@ -80,6 +80,26 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     {{!-- navbar ends here --}}
 
     <div class="container">
+      {{!-- display of flash messages --}}
+          {{#if success_messages }}        
+            {{#each success_messages}}
+                <div class="alert alert-success">
+                    {{this}}
+                </div>
+            {{/each}}        
+        {{/if}}
+
+        {{#if error_messages}}
+            {{#each error_messages}}
+                <div class="alert alert-danger">
+                    {{this}}
+                </div>
+            {{/each}}       
+
+        {{/if}}
+
+        {{!-- flash message ends here --}}
+
         {{#block "content"}}
         {{/block}}
     </div>
