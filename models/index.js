@@ -10,6 +10,9 @@ const Product = bookshelf.model("Product", {
   type() {
     return this.belongsTo("Type");
   },
+  ingredients() {
+    return this.belongsToMany("Ingredient");
+  },
 });
 
 const Flavour = bookshelf.model("Flavour", {
@@ -27,4 +30,11 @@ const Type = bookshelf.model("Type", {
   },
 });
 
-module.exports = { Product, Flavour, Type };
+const Ingredient = bookshelf.model("Ingredient", {
+  tableName: "ingredients",
+  products() {
+    return this.belongsToMany("Product");
+  },
+});
+
+module.exports = { Product, Flavour, Type, Ingredient };
