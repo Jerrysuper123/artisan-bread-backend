@@ -9,7 +9,10 @@
             <th>Name</th>
             <th>Cost</th>
             <th>Description</th>
-            <th></th>
+            <th>Flavour</th>
+            <th>Type</th>
+            <th>Ingredient</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -19,6 +22,9 @@
             <td>{{this.name}}</td>
             <td>${{this.price}}</td>
             <td>{{this.description}}</td>
+            <td>{{this.flavour.flavour}}</td>
+            <td></td>
+            <td></td>
             <td>
                 <a href="/products/{{this.id}}/update">update</a>
                 <a href="/products/{{this.id}}/delete">delete</a>

@@ -6,7 +6,12 @@ const { bootstrapField, createProductForm } = require("../forms");
 /*retrieve all products and display it */
 router.get("/", async (req, res) => {
   // console.log("product class", Product);
-  let products = await Product.collection().fetch();
+  let products = await Product.collection().fetch({
+    // pass the function created in modal to products
+    //we can call this.flavour in hbs to access the relevant row
+    //this.flavour.flavour to access relevant data
+    withRelated: ["flavour"],
+  });
   res.render("products/index", {
     products: products.toJSON(),
   });
@@ -31,13 +36,16 @@ router.get("/create", async (req, res) => {
 });
 
 router.post("/create", async (req, res) => {
-  const productForm = createProductForm();
+  const allFlavours = await fetchAllFlavours();
+  const productForm = createProductForm(allFlavours);
   productForm.handle(req, {
     success: async (form) => {
-      const product = new Product();
-      product.set("name", form.data.name);
-      product.set("price", form.data.price);
-      product.set("description", form.data.description);
+      // all fields must match
+      const product = new Product(form.data);
+
+      // product.set("name", form.data.name);
+      // product.set("price", form.data.price);
+      // product.set("description", form.data.description);
       //save each row
       await product.save();
       res.redirect("/products");
@@ -63,11 +71,14 @@ router.get("/:product_id/update", async (req, res) => {
   } catch (e) {
     console.log(e);
   }
+  const allFlavours = await fetchAllFlavours();
+  const productForm = createProductForm(allFlavours);
 
-  const productForm = createProductForm();
   productForm.fields.name.value = product.get("name");
   productForm.fields.price.value = product.get("price");
   productForm.fields.description.value = product.get("description");
+  productForm.fields.flavour_id.value = product.get("flavour_id");
+
   res.render("products/update", {
     form: productForm.toHTML(bootstrapField),
     product: product.toJSON(),
@@ -88,7 +99,9 @@ router.post("/:product_id/update", async (req, res) => {
   }
 
   //process the updated info from admin user by updating the product row
-  const productForm = createProductForm();
+  const allFlavours = await fetchAllFlavours();
+  const productForm = createProductForm(allFlavours);
+
   productForm.handle(req, {
     success: async (form) => {
       product.set(form.data);
