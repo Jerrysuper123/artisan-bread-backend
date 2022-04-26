@@ -65,4 +65,46 @@ const createProductForm = (flavours, types, ingredients) => {
   });
 };
 
-module.exports = { createProductForm, bootstrapField };
+/*user registration form */
+const createRegistrationForm = () => {
+  return forms.create({
+    username: fields.string({
+      required: true,
+      errorAfterField: true,
+    }),
+    email: fields.string({
+      //you can use the validator email to validate an email
+      required: true,
+      errorAfterField: true,
+    }),
+    password: fields.password({
+      required: true,
+      errorAfterField: true,
+    }),
+    //confirm to match password you have just keyed in
+    confirm_password: fields.password({
+      required: true,
+      errorAfterField: true,
+      validators: [validators.matchField("password")],
+    }),
+  });
+};
+const createLoginForm = () => {
+  return forms.create({
+    email: fields.string({
+      required: true,
+      errorAfterField: true,
+    }),
+    password: fields.password({
+      required: true,
+      errorAfterField: true,
+    }),
+  });
+};
+
+module.exports = {
+  createProductForm,
+  createRegistrationForm,
+  createLoginForm,
+  bootstrapField,
+};

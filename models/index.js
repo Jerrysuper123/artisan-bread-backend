@@ -37,4 +37,8 @@ const Ingredient = bookshelf.model("Ingredient", {
   },
 });
 
-module.exports = { Product, Flavour, Type, Ingredient };
+/*users */
+const User = bookshelf.model("User", {
+  tableName: "users",
+});
+module.exports = { Product, Flavour, Type, Ingredient, User };

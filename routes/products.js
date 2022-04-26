@@ -5,7 +5,14 @@ const { bootstrapField, createProductForm } = require("../forms");
 
 /*retrieve all products and display it */
 router.get("/", async (req, res) => {
-  // console.log("product class", Product);
+  //do not show product page if not an admin user
+  const user = req.session.user;
+  //if there is no such user, otherwise, show the user profile
+  if (!user) {
+    req.flash("error_messages", "You do not have permission to view this page");
+    res.redirect("/users/login");
+  }
+
   let products = await Product.collection().fetch({
     // pass the function created in modal to products
     //we can call this.flavour in hbs to access the relevant row
