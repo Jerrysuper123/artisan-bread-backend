@@ -24,7 +24,10 @@
             <td>{{this.description}}</td>
             <td>{{this.flavour.flavour}}</td>
             <td>{{this.type.type}}</td>
-            <td></td>
+            <td>{{#each this.ingredients}}
+                <span class="badge bg-primary">{{this.ingredient}}</span>
+                {{/each}}
+            </td>
             <td>
                 <a href="/products/{{this.id}}/update">update</a>
                 <a href="/products/{{this.id}}/delete">delete</a>

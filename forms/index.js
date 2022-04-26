@@ -27,7 +27,7 @@ const bootstrapField = function (name, object) {
   return '<div class="form-group">' + label + widget + error + "</div>";
 };
 
-const createProductForm = (flavours, types) => {
+const createProductForm = (flavours, types, ingredients) => {
   return forms.create({
     name: fields.string({
       required: true,
@@ -55,6 +55,12 @@ const createProductForm = (flavours, types) => {
       errorAfterField: true,
       widget: widgets.select(),
       choices: types,
+    }),
+    ingredients: fields.string({
+      required: true,
+      errorAfterField: true,
+      widget: widgets.multipleSelect(),
+      choices: ingredients,
     }),
   });
 };
