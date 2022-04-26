@@ -2,17 +2,10 @@ const express = require("express");
 const router = express.Router();
 const { Product, Flavour, Type, Ingredient } = require("../models");
 const { bootstrapField, createProductForm } = require("../forms");
+const { checkIfOwnerAuthenticated } = require("../middlewares");
 
 /*retrieve all products and display it */
 router.get("/", async (req, res) => {
-  //do not show product page if not an admin user
-  const user = req.session.user;
-  //if there is no such user, otherwise, show the user profile
-  if (!user) {
-    req.flash("error_messages", "You do not have permission to view this page");
-    res.redirect("/users/login");
-  }
-
   let products = await Product.collection().fetch({
     // pass the function created in modal to products
     //we can call this.flavour in hbs to access the relevant row
@@ -174,37 +167,45 @@ router.post("/:product_id/update", async (req, res) => {
 });
 
 /*delete product */
-router.get("/:product_id/delete", async (req, res) => {
-  let product;
-  try {
-    product = await Product.where({
-      id: req.params.product_id,
-    }).fetch({
-      require: true,
+router.get(
+  "/:product_id/delete",
+  checkIfOwnerAuthenticated,
+  async (req, res) => {
+    let product;
+    try {
+      product = await Product.where({
+        id: req.params.product_id,
+      }).fetch({
+        require: true,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+
+    res.render("products/delete", {
+      product: product.toJSON(),
     });
-  } catch (e) {
-    console.log(e);
   }
+);
 
-  res.render("products/delete", {
-    product: product.toJSON(),
-  });
-});
+router.post(
+  "/:product_id/delete",
+  checkIfOwnerAuthenticated,
+  async (req, res) => {
+    let product;
+    try {
+      product = await Product.where({
+        id: req.params.product_id,
+      }).fetch({
+        require: true,
+      });
+    } catch (e) {
+      console.log(e);
+    }
 
-router.post("/:product_id/delete", async (req, res) => {
-  let product;
-  try {
-    product = await Product.where({
-      id: req.params.product_id,
-    }).fetch({
-      require: true,
-    });
-  } catch (e) {
-    console.log(e);
+    await product.destroy();
+    res.redirect("/products");
   }
-
-  await product.destroy();
-  res.redirect("/products");
-});
+);
 
 module.exports = router;

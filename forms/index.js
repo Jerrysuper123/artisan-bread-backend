@@ -87,6 +87,10 @@ const createRegistrationForm = () => {
       errorAfterField: true,
       validators: [validators.matchField("password")],
     }),
+    role: fields.string({
+      required: true,
+      errorAfterField: true,
+    }),
   });
 };
 const createLoginForm = () => {

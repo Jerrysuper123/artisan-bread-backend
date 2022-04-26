@@ -1,8 +1,20 @@
 const express = require("express");
 const router = express.Router();
 
+//it comes with node js, built in
+const crypto = require("crypto");
+
+//sha256 is a mini hashing algorithm
+const getHashedPassword = (password) => {
+  const sha256 = crypto.createHash("sha256");
+  const hash = sha256.update(password).digest("base64");
+  return hash;
+};
+
 // import in the User model
 const { User } = require("../models");
+
+const { checkIfOwnerAuthenticated } = require("../middlewares");
 
 const {
   createRegistrationForm,
@@ -10,7 +22,7 @@ const {
   bootstrapField,
 } = require("../forms");
 
-router.get("/register", (req, res) => {
+router.get("/register", checkIfOwnerAuthenticated, (req, res) => {
   // display the registration form
   const registerForm = createRegistrationForm();
   res.render("users/register", {
@@ -18,7 +30,7 @@ router.get("/register", (req, res) => {
   });
 });
 
-router.post("/register", (req, res) => {
+router.post("/register", checkIfOwnerAuthenticated, (req, res) => {
   const registerForm = createRegistrationForm();
 
   registerForm.handle(req, {
@@ -27,8 +39,9 @@ router.post("/register", (req, res) => {
       const user = new User({
         //we do not need “confirmed_password”, so we type all out
         username: form.data.username,
-        password: form.data.password,
+        password: getHashedPassword(form.data.password),
         email: form.data.email,
+        role: form.data.role,
       });
       await user.save();
       //show flash message to user when created successfully
@@ -78,7 +91,7 @@ router.post("/login", async (req, res) => {
       } else {
         // check if the password matches
 
-        if (user.get("password") === form.data.password) {
+        if (user.get("password") === getHashedPassword(form.data.password)) {
           // add to the session that login succeed
 
           // store the user details
@@ -88,6 +101,7 @@ router.post("/login", async (req, res) => {
             id: user.get("id"),
             username: user.get("username"),
             email: user.get("email"),
+            role: user.get("role"),
           };
           req.flash(
             "success_messages",
@@ -119,7 +133,10 @@ router.post("/login", async (req, res) => {
 
 router.get("/logout", (req, res) => {
   //remove session data
-  let name = req.session.user.username;
+  let name = "";
+  if (req.session.user) {
+    name = req.session.user.username;
+  }
   req.session.user = null;
   req.flash("success_messages", `Goodbye ${name}!`);
   res.redirect("/users/login");

@@ -45,15 +45,22 @@ app.use((req, res, next) => {
   next();
 });
 
+//passing user info to all hbs pages
+app.use(function (req, res, next) {
+  res.locals.user = req.session.user;
+  next();
+});
+
 const adminRoutes = require("./routes/admin");
 const productRoutes = require("./routes/products");
 const userRoutes = require("./routes/users");
+const { checkIfAuthenticated } = require("./middlewares");
 async function main() {
   //   app.get("/", (req, res) => {
   //     res.send("alive");
   //   });
   app.use("/admin", adminRoutes);
-  app.use("/products", productRoutes);
+  app.use("/products", checkIfAuthenticated, productRoutes);
   app.use("/users", userRoutes);
 }
 

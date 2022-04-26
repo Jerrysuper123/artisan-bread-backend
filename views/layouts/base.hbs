@@ -71,8 +71,18 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                 </a>
               </li>
             </ul>
+            
+            {{!-- display logged in user info --}}
+                {{#if user}}
+                    Hi, {{user.username}}
 
-           
+                    <a href="/users/logout" class="ms-3 btn btn-primary btn-sm">Logout</a>
+
+                {{else}}
+                    Welcome, guest
+                  <a href="/users/login" class="ms-3 btn btn-primary btn-sm">Login</a>
+                {{/if}}
+           {{!-- display logged in user info ends here --}}
 
           </div>
         </div>
