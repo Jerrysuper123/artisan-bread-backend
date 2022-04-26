@@ -53,6 +53,10 @@ router.get("/create", async (req, res) => {
   const productForm = await fetchProductForm();
   res.render("products/create", {
     form: productForm.toHTML(bootstrapField),
+    // pass over cloudiary keys to the create form
+    cloudinaryName: process.env.CLOUDINARY_NAME,
+    cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+    cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET,
   });
 });
 

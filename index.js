@@ -77,6 +77,7 @@ app.use(function (req, res, next) {
 const adminRoutes = require("./routes/admin");
 const productRoutes = require("./routes/products");
 const userRoutes = require("./routes/users");
+const cloudinaryRoutes = require("./routes/cloudinary");
 const { checkIfAuthenticated } = require("./middlewares");
 async function main() {
   //   app.get("/", (req, res) => {
@@ -85,6 +86,7 @@ async function main() {
   app.use("/admin", adminRoutes);
   app.use("/products", checkIfAuthenticated, productRoutes);
   app.use("/users", userRoutes);
+  app.use("/cloudinary", cloudinaryRoutes);
 }
 
 main();

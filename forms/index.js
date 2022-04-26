@@ -62,6 +62,9 @@ const createProductForm = (flavours, types, ingredients) => {
       widget: widgets.multipleSelect(),
       choices: ingredients,
     }),
+    image_url: fields.string({
+      widget: widgets.hidden(),
+    }),
   });
 };
 
