@@ -1,5 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const {
+  fetchAllFlavours,
+  fetchAllTypes,
+  fetchAllIngredients,
+} = require("../dal/products");
 const { Product, Flavour, Type, Ingredient } = require("../models");
 const { bootstrapField, createProductForm } = require("../forms");
 const { checkIfOwnerAuthenticated } = require("../middlewares");
@@ -16,27 +21,6 @@ router.get("/", async (req, res) => {
     products: products.toJSON(),
   });
 });
-
-const fetchAllFlavours = async () => {
-  const allFlavours = await Flavour.fetchAll().map((f) => {
-    return [f.get("id"), f.get("flavour")];
-  });
-  return allFlavours;
-};
-
-const fetchAllTypes = async () => {
-  const allTypes = await Type.fetchAll().map((t) => {
-    return [t.get("id"), t.get("type")];
-  });
-  return allTypes;
-};
-
-const fetchAllIngredients = async () => {
-  const allIngredients = await Ingredient.fetchAll().map((i) => {
-    return [i.get("id"), i.get("ingredient")];
-  });
-  return allIngredients;
-};
 
 const fetchProductForm = async () => {
   const allFlavours = await fetchAllFlavours();
