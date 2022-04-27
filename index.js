@@ -31,7 +31,7 @@ app.use(
 app.use(
   session({
     store: new FileStore(),
-    secret: "funny chocolate",
+    secret: process.env.SESSION_SECRET_KEY,
     resave: false,
     saveUninitialized: true,
   })
