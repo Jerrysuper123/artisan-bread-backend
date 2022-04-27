@@ -14,6 +14,7 @@
             <th>Flavour</th>
             <th>Type</th>
             <th>Ingredient</th>
+            <th>Image</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -29,6 +30,13 @@
             <td>{{#each this.ingredients}}
                 <span class="badge bg-primary">{{this.ingredient}}</span>
                 {{/each}}
+            </td>
+            <td>
+                {{#if this.image_url }}
+                    <img src="{{this.image_url}}" style="width: 3rem"/>
+                    {{else}}
+                    <img src="" style="display:none"/>
+                {{/if}}
             </td>
             <td>
                 <a href="/products/{{this.id}}/update">update</a>

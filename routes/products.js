@@ -108,6 +108,7 @@ router.get("/:product_id/update", async (req, res) => {
   productForm.fields.description.value = product.get("description");
   productForm.fields.flavour_id.value = product.get("flavour_id");
   productForm.fields.type_id.value = product.get("type_id");
+  productForm.fields.image_url.value = product.get("image_url");
 
   //fill in multi-select for the ingredients
   let selectedIngredients = await product.related("ingredients").pluck("id");
@@ -116,6 +117,9 @@ router.get("/:product_id/update", async (req, res) => {
   res.render("products/update", {
     form: productForm.toHTML(bootstrapField),
     product: product.toJSON(),
+    cloudinaryName: process.env.CLOUDINARY_NAME,
+    cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+    cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET,
   });
 });
 
