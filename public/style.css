@@ -35,7 +35,9 @@ h4 {
 }
 
 /*text color setting*/
-
+h4 {
+    color: #04bdad !important;
+}
 .primaryColor {
     color: #d98e04 !important;
 }
@@ -105,9 +107,19 @@ h4 {
     background-color: white;
 }
 
-.navbar {
+/* .navbar {
     background-color: white !important;
+} */
+
+/* nav a {
+    color: white;
+    text-decoration: none;
 }
+
+.nav-link {
+    color: white !important;
+    text-decoration: none;
+} */
 
 .iconImage {
     width: 1.5rem;
@@ -122,12 +134,12 @@ h4 {
 }
 
 .formImage {
-    width: 30%;
-    height: 65%;
+    width: 35%;
+    height: 70%;
 }
 .adminForm {
-    width: 30%;
-    height: 65%;
+    width: 35%;
+    height: 70%;
     background-color: white !important;
 }
 
