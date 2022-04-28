@@ -41,10 +41,12 @@ async function removeFromCart(userId, productId) {
 
 async function updateQuantity(userId, productId, newQuantity) {
   //check business logics here, that there is enough stock etc.
+
   let cartItem = await getCartItemByUserAndProduct(userId, productId);
+
   if (cartItem) {
     cartItem.set("quantity", newQuantity);
-    cartItem.save();
+    await cartItem.save();
     return true;
   }
   return false;

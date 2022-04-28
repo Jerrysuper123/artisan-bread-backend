@@ -5,6 +5,7 @@
     
     <a href="/products/create">Add a product</a>
     <a class="ms-5" href="/users/logout">log out</a>
+    <a class="ms-5" href="/cart">Cart</a>
     <thead>
         <tr>
             <th>ID</th>
@@ -39,6 +40,8 @@
                 {{/if}}
             </td>
             <td>
+                {{!--add to cart btn  --}}
+                <a href="/cart/{{this.id}}/add" class="btn btn-success btn-sm">Add to cart</a>
                 <a href="/products/{{this.id}}/update">update</a>
                 <a href="/products/{{this.id}}/delete">delete</a>
             </td>
