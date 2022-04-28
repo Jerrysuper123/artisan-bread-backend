@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const hbs = require("hbs");
 const wax = require("wax-on");
 require("dotenv").config();
@@ -26,6 +27,9 @@ app.use(
     extended: false,
   })
 );
+
+// cors has to be enabled before session
+app.use(cors());
 
 //use sessions before all routes
 app.use(
@@ -87,7 +91,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-const adminRoutes = require("./routes/admin");
+const landingRoutes = require("./routes/landing");
 const productRoutes = require("./routes/products");
 const userRoutes = require("./routes/users");
 const cloudinaryRoutes = require("./routes/cloudinary");
@@ -97,10 +101,8 @@ const api = {
 };
 const { checkIfAuthenticated } = require("./middlewares");
 async function main() {
-  //   app.get("/", (req, res) => {
-  //     res.send("alive");
-  //   });
-  app.use("/admin", adminRoutes);
+  //landing page redirect to /users/login route
+  app.use("/", landingRoutes);
   app.use("/products", checkIfAuthenticated, productRoutes);
   app.use("/users", userRoutes);
   app.use("/cloudinary", cloudinaryRoutes);
