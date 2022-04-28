@@ -99,6 +99,7 @@ const cloudinaryRoutes = require("./routes/cloudinary");
 const cartRoutes = require("./routes/shoppingCart");
 const api = {
   products: require("./routes/API/products"),
+  shoppingCart: require("./routes/API/cart"),
 };
 const { checkIfAuthenticated } = require("./middlewares");
 async function main() {
@@ -113,10 +114,11 @@ async function main() {
   //the above routes parse req.body by caolan form into form.data
   //API route parse req.body into JSON format for API route only
   app.use("/api/products", express.json(), api.products);
+  app.use("/api/cart", express.json(), api.shoppingCart);
 }
 
 main();
 
-app.listen(3000, () => {
+app.listen(8000, () => {
   console.log("Server has started");
 });

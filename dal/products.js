@@ -1,7 +1,9 @@
 const { Product, Flavour, Type, Ingredient } = require("../models");
 
 const getAllProducts = async () => {
-  return await Product.fetchAll();
+  return await Product.collection().fetch({
+    withRelated: ["flavour", "type", "ingredients"],
+  });
 };
 
 const fetchAllFlavours = async () => {
