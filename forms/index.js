@@ -57,7 +57,7 @@ const createProductForm = (flavours, types, ingredients) => {
       choices: types,
     }),
     ingredients: fields.string({
-      required: true,
+      // required: true,
       errorAfterField: true,
       widget: widgets.multipleSelect(),
       choices: ingredients,

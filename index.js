@@ -37,7 +37,16 @@ app.use(
   })
 );
 
-app.use(csrf());
+// app.use(csrf());
+const csrfInstance = csrf();
+app.use(function (req, res, next) {
+  if (req.url.slice(0, 5) === "/api/") {
+    return next();
+  }
+  // only use csrf when url does not include /api/
+  csrfInstance(req, res, next);
+});
+
 // middleware to handle csrf error, first arg is the error
 app.use(function (err, req, res, next) {
   //if the error code is whatever, we flash the message then redirect back
@@ -55,7 +64,11 @@ app.use(function (err, req, res, next) {
 app.use(function (req, res, next) {
   //req.csrfToken generates a new token
   //then made available to res hbs
-  res.locals.csrfToken = req.csrfToken();
+
+  //we only pass csrfToken to hbs when there is, /api/ does not have csrf token
+  if (req.csrfToken) {
+    res.locals.csrfToken = req.csrfToken();
+  }
   next();
 });
 
@@ -92,7 +105,10 @@ async function main() {
   app.use("/users", userRoutes);
   app.use("/cloudinary", cloudinaryRoutes);
   app.use("/cart", cartRoutes);
-  app.use("/api/products", api.products);
+
+  //the above routes parse req.body by caolan form into form.data
+  //API route parse req.body into JSON format for API route only
+  app.use("/api/products", express.json(), api.products);
 }
 
 main();
