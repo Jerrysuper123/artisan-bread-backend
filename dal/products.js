@@ -1,5 +1,9 @@
 const { Product, Flavour, Type, Ingredient } = require("../models");
 
+const getAllProducts = async () => {
+  return await Product.fetchAll();
+};
+
 const fetchAllFlavours = async () => {
   const allFlavours = await Flavour.fetchAll().map((f) => {
     return [f.get("id"), f.get("flavour")];
@@ -25,4 +29,5 @@ module.exports = {
   fetchAllFlavours,
   fetchAllTypes,
   fetchAllIngredients,
+  getAllProducts,
 };
