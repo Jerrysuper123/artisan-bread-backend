@@ -122,15 +122,20 @@ h4 {
 }
 
 .formImage {
-    width: 40%;
-    height: 70%;
+    width: 30%;
+    height: 65%;
 }
 .adminForm {
-    width: 40%;
-    height: 70%;
+    width: 30%;
+    height: 65%;
     background-color: white !important;
 }
 
+@media only screen and (max-width: 790px) {
+    .adminForm {
+        width: 90%;
+    }
+}
 .adminForm p {
     font-size: 0.8rem;
     color: #8aa6bf;
