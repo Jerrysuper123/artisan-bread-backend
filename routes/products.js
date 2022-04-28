@@ -159,45 +159,37 @@ router.post("/:product_id/update", async (req, res) => {
 });
 
 /*delete product */
-router.get(
-  "/:product_id/delete",
-  checkIfOwnerAuthenticated,
-  async (req, res) => {
-    let product;
-    try {
-      product = await Product.where({
-        id: req.params.product_id,
-      }).fetch({
-        require: true,
-      });
-    } catch (e) {
-      console.log(e);
-    }
-
-    res.render("products/delete", {
-      product: product.toJSON(),
+router.get("/:product_id/delete", async (req, res) => {
+  let product;
+  try {
+    product = await Product.where({
+      id: req.params.product_id,
+    }).fetch({
+      require: true,
     });
+  } catch (e) {
+    console.log(e);
   }
-);
 
-router.post(
-  "/:product_id/delete",
-  checkIfOwnerAuthenticated,
-  async (req, res) => {
-    let product;
-    try {
-      product = await Product.where({
-        id: req.params.product_id,
-      }).fetch({
-        require: true,
-      });
-    } catch (e) {
-      console.log(e);
-    }
+  res.render("products/delete", {
+    product: product.toJSON(),
+  });
+});
 
-    await product.destroy();
-    res.redirect("/products");
+router.post("/:product_id/delete", async (req, res) => {
+  let product;
+  try {
+    product = await Product.where({
+      id: req.params.product_id,
+    }).fetch({
+      require: true,
+    });
+  } catch (e) {
+    console.log(e);
   }
-);
+
+  await product.destroy();
+  res.redirect("/products");
+});
 
 module.exports = router;

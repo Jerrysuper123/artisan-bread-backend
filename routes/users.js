@@ -22,7 +22,11 @@ const {
   bootstrapField,
 } = require("../forms");
 
-router.get("/register", checkIfOwnerAuthenticated, (req, res) => {
+router.get("/", (req, res) => {
+  res.render("users/users");
+});
+
+router.get("/register", (req, res) => {
   // display the registration form
   const registerForm = createRegistrationForm();
   res.render("users/register", {
@@ -30,7 +34,7 @@ router.get("/register", checkIfOwnerAuthenticated, (req, res) => {
   });
 });
 
-router.post("/register", checkIfOwnerAuthenticated, (req, res) => {
+router.post("/register", (req, res) => {
   const registerForm = createRegistrationForm();
 
   registerForm.handle(req, {

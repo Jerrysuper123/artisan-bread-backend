@@ -93,6 +93,7 @@ app.use(function (req, res, next) {
 
 const landingRoutes = require("./routes/landing");
 const productRoutes = require("./routes/products");
+const orderRoutes = require("./routes/orders");
 const userRoutes = require("./routes/users");
 const cloudinaryRoutes = require("./routes/cloudinary");
 const cartRoutes = require("./routes/shoppingCart");
@@ -104,6 +105,7 @@ async function main() {
   //landing page redirect to /users/login route
   app.use("/", landingRoutes);
   app.use("/products", checkIfAuthenticated, productRoutes);
+  app.use("/orders", orderRoutes);
   app.use("/users", userRoutes);
   app.use("/cloudinary", cloudinaryRoutes);
   app.use("/cart", cartRoutes);
