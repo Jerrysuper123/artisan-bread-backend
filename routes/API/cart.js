@@ -20,6 +20,7 @@ router.get("/:product_id/add", async (req, res) => {
   let cart = new CartServices(2);
   console.log("from api", req.params.product_id);
   await cart.addToCart(req.params.product_id, 1);
+  res.sendStatus(200);
 });
 
 router.get("/:product_id/remove", async (req, res) => {
@@ -27,6 +28,7 @@ router.get("/:product_id/remove", async (req, res) => {
   let cart = new CartServices(2);
   //params is in the url /id/remove when user clicked remove button
   await cart.remove(req.params.product_id);
+  res.sendStatus(200);
 });
 
 router.post("/:product_id/quantity/update", async (req, res) => {
@@ -36,6 +38,7 @@ router.post("/:product_id/quantity/update", async (req, res) => {
   console.log("fromAPI", req.body);
 
   await cart.setQuantity(req.params.product_id, req.body.newQuantity);
+  res.sendStatus(200);
 });
 
 module.exports = router;
