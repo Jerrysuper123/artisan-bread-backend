@@ -44,7 +44,10 @@ app.use(
 // app.use(csrf());
 const csrfInstance = csrf();
 app.use(function (req, res, next) {
-  if (req.url.slice(0, 5) === "/api/") {
+  if (
+    req.url.slice(0, 5) === "/api/" ||
+    req.url === "/api/checkout/process_payment"
+  ) {
     return next();
   }
   // only use csrf when url does not include /api/
@@ -97,6 +100,7 @@ const orderRoutes = require("./routes/orders");
 const userRoutes = require("./routes/users");
 const cloudinaryRoutes = require("./routes/cloudinary");
 const cartRoutes = require("./routes/shoppingCart");
+const checkOutRoutes = require("./routes/API/checkout");
 const api = {
   products: require("./routes/API/products"),
   shoppingCart: require("./routes/API/cart"),
@@ -115,6 +119,8 @@ async function main() {
   //API route parse req.body into JSON format for API route only
   app.use("/api/products", express.json(), api.products);
   app.use("/api/cart", express.json(), api.shoppingCart);
+  // webhooks does not work well with express.json(), so do not inlude express.json() on this route
+  app.use("/api/checkout", checkOutRoutes);
 }
 
 main();
