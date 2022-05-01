@@ -84,12 +84,6 @@ router.post(
     let sigHeader = req.headers["stripe-signature"];
     let event;
     try {
-      //below will try if the request is coming from stripe, if false, will catch error
-      // event = Stripe.webhooks.constructEvent(
-      //   payload,
-      //   sigHeader,
-      //   endpointSecret
-      // );
       event = Stripe.webhooks.constructEvent(
         payload,
         sigHeader,
@@ -105,29 +99,17 @@ router.post(
 
     if (event.type == "checkout.session.completed") {
       //if completed, then we know it is from stripe
-      //sometimes api changes
       let stripeSession = event.data.object;
       console.log(stripeSession);
-      let removedCart = stripeSession.metadata.orders;
-      console.log("remoed cart", removedCart);
-      // let userId = removedCart[0]["user_id"];
+      // must convert raw body back to Json before accessing it using JS
+      let removedCart = JSON.parse(stripeSession.metadata.orders);
+      console.log("removed cart", removedCart);
+      let userId = removedCart[0]["user_id"];
       // // let userId = removedCart[0]["user_id"];
-      // console.log("userID", userId);
-      // console.log(removedCart[0]);
+      console.log("userID", userId);
 
-      //   const cart = new CartServices(req.session.user.id);
-      //default to 2 for now as Tom
-      // const cart = new CartServices(2);
-
-      // get all the items from the cart
-      // for (let item of removedCart) {
-      // let productId = item["product_id"];
-      // await cart.remove(15);
-      // }
-
-      // process stripeSession
-      let cart = new CartServices(2);
-      await cart.removeAllCart(2);
+      // delete the cart in the cart database
+      await deleteCart(userId);
     }
     res.send({ received: true });
     // let cart = new CartServices(2);
@@ -135,5 +117,10 @@ router.post(
     // await cart.remove("15");
   }
 );
+
+const deleteCart = async (userId) => {
+  let cart = new CartServices(userId);
+  await cart.removeAllCart(userId);
+};
 
 module.exports = router;

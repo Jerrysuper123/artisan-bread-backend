@@ -117,6 +117,7 @@ async function main() {
 
   //the above routes parse req.body by caolan form into form.data
   //API route parse req.body into JSON format for API route only
+  //express.json() is to parse incoming payload which is json from axios
   app.use("/api/products", express.json(), api.products);
   app.use("/api/cart", express.json(), api.shoppingCart);
   // webhooks does not work well with express.json(), so do not inlude express.json() on this route

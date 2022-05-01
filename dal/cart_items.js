@@ -21,18 +21,23 @@ const getCartItemByUserAndProduct = async (userId, productId) => {
 };
 
 const getCartByUserId = async (userId) => {
-  return await CartItem.where({
-    user_id: userId,
-  }).fetch({
-    require: false,
-  });
+  // collection is to return multiple rows
+  return await CartItem.collection()
+    .where({
+      user_id: userId,
+    })
+    .fetch({
+      require: false,
+    });
 };
 
 //this remove all cartItem by userId
 async function removeFromCartByUserId(userId) {
   let cartItems = await getCartByUserId(userId);
+  console.log("DAL cartItems", cartItems);
   if (cartItems) {
     await cartItems.destroy();
+    console.log("Dal", "deleted cart by user iD");
     return true;
   }
   return false;
