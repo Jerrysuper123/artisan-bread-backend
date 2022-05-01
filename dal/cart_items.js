@@ -20,6 +20,24 @@ const getCartItemByUserAndProduct = async (userId, productId) => {
   });
 };
 
+const getCartByUserId = async (userId) => {
+  return await CartItem.where({
+    user_id: userId,
+  }).fetch({
+    require: false,
+  });
+};
+
+//this remove all cartItem by userId
+async function removeFromCartByUserId(userId) {
+  let cartItems = await getCartByUserId(userId);
+  if (cartItems) {
+    await cartItems.destroy();
+    return true;
+  }
+  return false;
+}
+
 async function createCartItem(userId, productId, quantity) {
   let cartItem = new CartItem({
     user_id: userId,
@@ -58,4 +76,5 @@ module.exports = {
   createCartItem,
   removeFromCart,
   updateQuantity,
+  removeFromCartByUserId,
 };

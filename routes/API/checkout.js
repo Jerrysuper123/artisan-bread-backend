@@ -17,6 +17,10 @@ router.get("/", async (req, res) => {
   // step 1 - create line items
   let lineItems = [];
   let meta = [];
+  // send user id over to stripe, so we could use it to destroy the cart
+  // meta.push({
+  //   userId: 2,
+  // });
   for (let item of items) {
     const lineItem = {
       name: item.related("product").get("name"),
@@ -34,6 +38,8 @@ router.get("/", async (req, res) => {
     //stripe lineItems cannot product Id, so we use meta data to store product_id
     // save the quantity data along with the product id
     meta.push({
+      // can be req.session.userid
+      user_id: 2,
       product_id: item.get("product_id"),
       quantity: item.get("quantity"),
     });
@@ -102,9 +108,31 @@ router.post(
       //sometimes api changes
       let stripeSession = event.data.object;
       console.log(stripeSession);
+      let removedCart = stripeSession.metadata.orders;
+      console.log("remoed cart", removedCart);
+      // let userId = removedCart[0]["user_id"];
+      // // let userId = removedCart[0]["user_id"];
+      // console.log("userID", userId);
+      // console.log(removedCart[0]);
+
+      //   const cart = new CartServices(req.session.user.id);
+      //default to 2 for now as Tom
+      // const cart = new CartServices(2);
+
+      // get all the items from the cart
+      // for (let item of removedCart) {
+      // let productId = item["product_id"];
+      // await cart.remove(15);
+      // }
+
       // process stripeSession
+      let cart = new CartServices(2);
+      await cart.removeAllCart(2);
     }
     res.send({ received: true });
+    // let cart = new CartServices(2);
+    //params is in the url /id/remove when user clicked remove button
+    // await cart.remove("15");
   }
 );
 
