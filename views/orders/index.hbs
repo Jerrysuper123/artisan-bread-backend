@@ -50,16 +50,16 @@
             </td>
             <td>
                 {{!-- {{this.order_status}} --}}
-                <form method="POST" action="/cart/{{this.product.id}}/quantity/update">
+                <form method="POST" action="/orders/orderstatus/{{this.id}}/update">
                    <input type="hidden" value="{{../csrfToken}}" name="_csrf"/> 
                  
-                    <input type="text" name="newQuantity" value="{{this.order_status}}" style="width:7rem" /> 
+                    <input type="text" name="order_status" value="{{this.order_status}}" style="width:7rem" /> 
                     <input type="submit" value="update status" class="btn btn-success btn-sm" />
-             </form>
+                </form>
             </td>
             <td>
-                <a href="/products/{{this.id}}/update">update</a>
-                <a href="/products/{{this.id}}/delete">delete</a>
+                {{!-- <a href="/products/{{this.id}}/update">update</a> --}}
+                <a href="/orders/{{this.id}}/delete">delete</a>
             </td>
         </tr>
         {{/each}}

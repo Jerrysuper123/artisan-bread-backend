@@ -29,6 +29,15 @@ const getOrderItemByUserAndProduct = async (userId, productId) => {
   });
 };
 
+const getOrderByOrderId = async (orderId) => {
+  return await OrderItem.where({
+    id: orderId,
+    // product_id: productId,
+  }).fetch({
+    require: false,
+  });
+};
+
 async function createOrderItem(
   orderDate,
   orderQuantity,
@@ -47,6 +56,15 @@ async function createOrderItem(
   return orderItem;
 }
 
+async function removeFromOrderByOrderId(orderId) {
+  let orderItem = await getOrderByOrderId(orderId);
+  if (orderItem) {
+    await orderItem.destroy();
+    return true;
+  }
+  return false;
+}
+
 async function removeFromOrder(userId, productId) {
   let orderItem = await getOrderItemByUserAndProduct(userId, productId);
   if (orderItem) {
@@ -56,11 +74,8 @@ async function removeFromOrder(userId, productId) {
   return false;
 }
 
-async function updateOrderStatus(userId, productId, newOrderStatus) {
-  //check business logics here, that there is enough stock etc.
-
-  let orderItem = await getOrderItemByUserAndProduct(userId, productId);
-
+async function updateOrderStatus(orderId, newOrderStatus) {
+  let orderItem = await getOrderByOrderId(orderId);
   if (orderItem) {
     orderItem.set("order_status", newOrderStatus);
     await orderItem.save();
@@ -76,4 +91,5 @@ module.exports = {
   createOrderItem,
   removeFromOrder,
   updateOrderStatus,
+  removeFromOrderByOrderId,
 };
