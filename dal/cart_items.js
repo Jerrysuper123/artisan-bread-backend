@@ -22,13 +22,11 @@ const getCartItemByUserAndProduct = async (userId, productId) => {
 
 const getCartByUserId = async (userId) => {
   // collection is to return multiple rows
-  return await CartItem.collection()
-    .where({
-      user_id: userId,
-    })
-    .fetch({
-      require: false,
-    });
+  return await CartItem.where({
+    user_id: userId,
+  }).fetch({
+    require: false,
+  });
 };
 
 //this remove all cartItem by userId

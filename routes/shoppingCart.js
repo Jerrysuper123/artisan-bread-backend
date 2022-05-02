@@ -30,6 +30,20 @@ router.get("/:product_id/remove", async (req, res) => {
   res.redirect("/cart");
 });
 
+router.get("/clearcart", async (req, res) => {
+  let userId = req.session.user.id;
+  let cart = new CartServices(userId);
+
+  // await cart.removeAllCart(userId);
+  let productIds = [10, 11];
+  for (let productId of productIds) {
+    await cart.remove(productId);
+  }
+
+  req.flash("success_messages", "Cart has been cleared");
+  res.redirect("/cart");
+});
+
 router.post("/:product_id/quantity/update", async (req, res) => {
   let cart = new CartServices(req.session.user.id);
   //update the quantity of the product

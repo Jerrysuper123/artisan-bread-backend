@@ -39,9 +39,10 @@ router.get("/", async (req, res) => {
     // save the quantity data along with the product id
     meta.push({
       // can be req.session.userid
+      id: item.get("id"),
       user_id: 2,
-      product_id: item.get("product_id"),
       quantity: item.get("quantity"),
+      product_id: item.get("product_id"),
     });
   }
 
@@ -109,7 +110,7 @@ router.post(
       console.log("userID", userId);
 
       // delete the cart in the cart database
-      await deleteCart(userId);
+      // await deleteCart(userId);
     }
     res.send({ received: true });
     // let cart = new CartServices(2);
