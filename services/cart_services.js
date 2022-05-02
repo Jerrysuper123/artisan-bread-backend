@@ -32,8 +32,18 @@ class CartServices {
     return await cartDataLayer.removeFromCart(this.user_id, productId);
   }
 
-  async removeAllCart(userId) {
-    return await cartDataLayer.removeFromCartByUserId(userId);
+  async clearCartByUser() {
+    let cartItems = (await cartDataLayer.getCart(this.user_id)).toJSON();
+    if (cartItems) {
+      let productIdArray = [];
+      for (let item of cartItems) {
+        productIdArray.push(item.product_id);
+      }
+
+      for (let productId of productIdArray) {
+        await this.remove(productId);
+      }
+    }
   }
 
   async setQuantity(productId, quantity) {

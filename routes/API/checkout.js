@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const router = express.Router();
 
 const CartServices = require("../../services/cart_services");
+const { createOrderItem } = require("../../dal/order_items");
 
 const Stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
@@ -109,13 +110,29 @@ router.post(
       // // let userId = removedCart[0]["user_id"];
       console.log("userID", userId);
 
-      // delete the cart in the cart database
-      // await deleteCart(userId);
+      try {
+        //add removed cart to order table
+        let orderDate = new Date().toLocaleString("en-sg", {
+          timeZone: "Asia/Singapore",
+        });
+        let shippingAddress = "N/A";
+        for (let c of removedCart) {
+          await createOrderItem(
+            orderDate,
+            c.quantity,
+            c.user_id,
+            c.product_id,
+            shippingAddress
+          );
+        }
+        // delete the cart in the cart database
+        let cart = new CartServices(userId);
+        await cart.clearCartByUser();
+      } catch (e) {
+        console.log(e);
+      }
     }
     res.send({ received: true });
-    // let cart = new CartServices(2);
-    //params is in the url /id/remove when user clicked remove button
-    // await cart.remove("15");
   }
 );
 

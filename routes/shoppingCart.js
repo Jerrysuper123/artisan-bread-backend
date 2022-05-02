@@ -32,19 +32,9 @@ router.get("/:product_id/remove", async (req, res) => {
 
 router.get("/clearcart", async (req, res) => {
   let userId = req.session.user.id;
+  // console.log("userid", userId);
   let cart = new CartServices(userId);
-
-  let cartItems = (await cart.getCart()).toJSON();
-  let productIdArray = [];
-  for (let item of cartItems) {
-    productIdArray.push(item.product_id);
-  }
-  // console.log(productIdArray);
-
-  //clear cart
-  for (let productId of productIdArray) {
-    await cart.remove(productId);
-  }
+  await cart.clearCartByUser();
 
   req.flash("success_messages", "Cart has been cleared");
   res.redirect("/cart");
