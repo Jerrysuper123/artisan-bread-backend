@@ -1,0 +1,69 @@
+{{#extends "base"}}
+{{#block "content"}}
+<h4>Manage orders</h4>
+<a href="/products/create" class="mt-2">
+        <i class="fa-solid fa-circle-plus">
+        </i>
+        <span class="ms-1">Place an order</span>
+</a>
+<table class="table mt-3">
+    
+
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Order_date</th>
+            <th>Product_name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Image</th>
+            <th>Customer_name</th>
+            <th>Customer_email</th>
+            <th>Customer_address</th>
+            <th>Order_status</th>
+            <th>Owner_Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each orders}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.order_date}}</td>
+            <td>{{this.product.name}}</td>
+            <td>${{this.product.price}}</td>
+            <td>{{this.quantity}}</td>
+            <td>
+                {{#if this.product.image_url }}
+                    <img src="{{this.product.image_url}}" style="width: 3rem"/>
+                    {{else}}
+                    <img src="" style="display:none"/>
+                {{/if}}
+            </td>
+            <td>
+                {{this.user.username}}
+            </td>
+            <td>
+                {{this.user.email}}
+            </td>
+            <td>
+                {{this.shipping_address}}
+            </td>
+            <td>
+                {{!-- {{this.order_status}} --}}
+                <form method="POST" action="/cart/{{this.product.id}}/quantity/update">
+                   <input type="hidden" value="{{../csrfToken}}" name="_csrf"/> 
+                 
+                    <input type="text" name="newQuantity" value="{{this.order_status}}" style="width:7rem" /> 
+                    <input type="submit" value="update status" class="btn btn-success btn-sm" />
+             </form>
+            </td>
+            <td>
+                <a href="/products/{{this.id}}/update">update</a>
+                <a href="/products/{{this.id}}/delete">delete</a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{/block}}
+{{/extends}}

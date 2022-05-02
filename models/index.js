@@ -49,4 +49,22 @@ const CartItem = bookshelf.model("CartItem", {
   },
 });
 
-module.exports = { Product, Flavour, Type, Ingredient, User, CartItem };
+const OrderItem = bookshelf.model("OrderItem", {
+  tableName: "order_items",
+  product() {
+    return this.belongsTo("Product");
+  },
+  user() {
+    return this.belongsTo("User");
+  },
+});
+
+module.exports = {
+  Product,
+  Flavour,
+  Type,
+  Ingredient,
+  User,
+  CartItem,
+  OrderItem,
+};
