@@ -34,9 +34,15 @@ router.get("/clearcart", async (req, res) => {
   let userId = req.session.user.id;
   let cart = new CartServices(userId);
 
-  // await cart.removeAllCart(userId);
-  let productIds = [10, 11];
-  for (let productId of productIds) {
+  let cartItems = (await cart.getCart()).toJSON();
+  let productIdArray = [];
+  for (let item of cartItems) {
+    productIdArray.push(item.product_id);
+  }
+  // console.log(productIdArray);
+
+  //clear cart
+  for (let productId of productIdArray) {
     await cart.remove(productId);
   }
 
