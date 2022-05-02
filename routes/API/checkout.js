@@ -136,9 +136,4 @@ router.post(
   }
 );
 
-const deleteCart = async (userId) => {
-  let cart = new CartServices(userId);
-  await cart.removeAllCart(userId);
-};
-
 module.exports = router;
