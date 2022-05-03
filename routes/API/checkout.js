@@ -54,6 +54,53 @@ router.get("/", async (req, res) => {
     //below keys are fixed by stripe
     payment_method_types: ["card"],
     line_items: lineItems,
+    shipping_address_collection: {
+      allowed_countries: ["SG"],
+    },
+    shipping_options: [
+      {
+        shipping_rate_data: {
+          type: "fixed_amount",
+          fixed_amount: {
+            amount: 0,
+            currency: "SGD",
+          },
+          display_name: "Free shipping",
+          // Delivers between 5-7 business days
+          delivery_estimate: {
+            minimum: {
+              unit: "business_day",
+              value: 5,
+            },
+            maximum: {
+              unit: "business_day",
+              value: 7,
+            },
+          },
+        },
+      },
+      {
+        shipping_rate_data: {
+          type: "fixed_amount",
+          fixed_amount: {
+            amount: 500,
+            currency: "SGD",
+          },
+          display_name: "Next day truck delivery",
+          // Delivers in exactly 1 business day
+          delivery_estimate: {
+            minimum: {
+              unit: "business_day",
+              value: 1,
+            },
+            maximum: {
+              unit: "business_day",
+              value: 1,
+            },
+          },
+        },
+      },
+    ],
     //where does stripe redirect too when successful transaction
     success_url:
       process.env.STRIPE_SUCCESS_URL + "?sessionId={CHECKOUT_SESSION_ID}",
@@ -104,6 +151,21 @@ router.post(
       let stripeSession = event.data.object;
       console.log(stripeSession);
       // must convert raw body back to Json before accessing it using JS
+      let shippingAddressObj = stripeSession.shipping.address;
+      // console.log("shipping address ob", shippingAddressObj);
+      let shippingAddress;
+      try {
+        // console.log("shipping address", shippingAddressObj["line1"]);
+        shippingAddress = `
+        ${shippingAddressObj["country"]}, ${shippingAddressObj["line1"]}, ${shippingAddressObj["line2"]}, SG ${shippingAddressObj["postal_code"]}
+      `;
+
+        console.log(shippingAddress);
+      } catch (e) {
+        console.log(e);
+      }
+
+      // console.log(shippingAddress);
       let removedCart = JSON.parse(stripeSession.metadata.orders);
       console.log("removed cart", removedCart);
       let userId = removedCart[0]["user_id"];
@@ -115,7 +177,7 @@ router.post(
         let orderDate = new Date().toLocaleString("en-sg", {
           timeZone: "Asia/Singapore",
         });
-        let shippingAddress = "N/A";
+        // let shippingAddress = "N/A";
         for (let c of removedCart) {
           await createOrderItem(
             orderDate,
