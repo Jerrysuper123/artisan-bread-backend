@@ -8,6 +8,7 @@ router.get("/allflavours", async (req, res) => {
   res.send({
     allFlavours: allFlavours.toJSON(),
   });
+  return res.status(200).json;
 });
 
 router.get("/alltypes", async (req, res) => {
@@ -15,6 +16,8 @@ router.get("/alltypes", async (req, res) => {
   res.send({
     allTypes: allTypes.toJSON(),
   });
+  //Cannot set headers after they are sent to the client, use below to avoid above error
+  return res.status(200).json;
 });
 
 router.get("/allingredients", async (req, res) => {
@@ -22,6 +25,7 @@ router.get("/allingredients", async (req, res) => {
   res.send({
     allIngredients: allIngredients.toJSON(),
   });
+  return res.status(200).json;
 });
 
 //url = baseURL/api/search
@@ -29,10 +33,12 @@ router.post("/", async (req, res) => {
   let q = Product.collection();
   //name, type, flavour, ingredients
   let name = req.body.name;
+  console.log(name);
   //below are all ids that are passed over, for easy searching in product table;
   let typeId = req.body.typeId;
   let flavourId = req.body.flavourId;
   let ingredientIds = req.body.ingredientIds;
+
   if (name) {
     q = q.where("name", "like", "%" + name + "%");
   }
@@ -62,6 +68,6 @@ router.post("/", async (req, res) => {
   res.send({
     products: products.toJSON(),
   });
-  res.sendStatus(200);
+  return res.status(200).json;
 });
 module.exports = router;
