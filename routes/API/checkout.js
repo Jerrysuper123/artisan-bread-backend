@@ -123,11 +123,6 @@ router.post(
   "/process_payment",
   bodyParser.raw({ type: "application/json" }),
   async (req, res) => {
-    // console.log("payment success at checkout");
-    // console.log("payload", req.body);
-    // console.log("sig head", req.headers["stripe-signature"]);
-    // console.log("end point secret", process.env.STRIPE_ENDPOINT_SECRET);
-
     let payload = req.body;
     let endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
     let sigHeader = req.headers["stripe-signature"];
@@ -149,35 +144,24 @@ router.post(
     if (event.type == "checkout.session.completed") {
       //if completed, then we know it is from stripe
       let stripeSession = event.data.object;
-      console.log(stripeSession);
-      // must convert raw body back to Json before accessing it using JS
+      // console.log(stripeSession);
       let shippingAddressObj = stripeSession.shipping.address;
-      // console.log("shipping address ob", shippingAddressObj);
       let shippingAddress;
-      try {
-        // console.log("shipping address", shippingAddressObj["line1"]);
-        shippingAddress = `
+      // console.log("shipping address", shippingAddressObj["line1"]);
+      shippingAddress = `
         ${shippingAddressObj["country"]}, ${shippingAddressObj["line1"]}, ${shippingAddressObj["line2"]}, SG ${shippingAddressObj["postal_code"]}
       `;
 
-        console.log(shippingAddress);
-      } catch (e) {
-        console.log(e);
-      }
-
-      // console.log(shippingAddress);
       let removedCart = JSON.parse(stripeSession.metadata.orders);
       console.log("removed cart", removedCart);
       let userId = removedCart[0]["user_id"];
-      // // let userId = removedCart[0]["user_id"];
-      console.log("userID", userId);
 
       try {
         //add removed cart to order table
         let orderDate = new Date().toLocaleString("en-sg", {
           timeZone: "Asia/Singapore",
         });
-        // let shippingAddress = "N/A";
+
         for (let c of removedCart) {
           await createOrderItem(
             orderDate,
