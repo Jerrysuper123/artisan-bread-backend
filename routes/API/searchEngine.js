@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Product, Flavour, Type, Ingredient } = require("../../models");
 
+//url = baseURL/api/search/allflavours
 router.get("/allflavours", async (req, res) => {
   let allFlavours = await Flavour.fetchAll();
   res.send({
@@ -23,6 +24,7 @@ router.get("/allingredients", async (req, res) => {
   });
 });
 
+//url = baseURL/api/search
 router.post("/", async (req, res) => {
   let q = Product.collection();
   //name, type, flavour, ingredients
