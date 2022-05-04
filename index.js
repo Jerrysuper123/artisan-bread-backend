@@ -100,11 +100,13 @@ const orderRoutes = require("./routes/orders");
 const userRoutes = require("./routes/users");
 const cloudinaryRoutes = require("./routes/cloudinary");
 const cartRoutes = require("./routes/shoppingCart");
-const checkOutRoutes = require("./routes/API/checkout");
+// const checkOutRoutes = require("./routes/API/checkout");
 const api = {
   products: require("./routes/API/products"),
   shoppingCart: require("./routes/API/cart"),
   search: require("./routes/API/searchEngine"),
+  checkout: require("./routes/API/checkout"),
+  users: require("./routes/API/users"),
 };
 const { checkIfAuthenticated } = require("./middlewares");
 async function main() {
@@ -123,7 +125,8 @@ async function main() {
   app.use("/api/cart", express.json(), api.shoppingCart);
   app.use("/api/search", express.json(), api.search);
   // webhooks does not work well with express.json(), so do not inlude express.json() on this route
-  app.use("/api/checkout", checkOutRoutes);
+  app.use("/api/checkout", api.checkout);
+  app.use("/api/users", express.json(), api.users);
 }
 
 main();

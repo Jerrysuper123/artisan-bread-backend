@@ -24,7 +24,29 @@ const checkIfOwnerAuthenticated = (req, res, next) => {
   }
 };
 
+const jwt = require("jsonwebtoken");
+
+const checkIfAuthenticatedJWT = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (authHeader) {
+    //"bearer JWT" - split to get JWT below
+    const token = authHeader.split(" ")[1];
+    //reverse the token back to human readable info about user
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, decodedToken) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+      //store decoded user info into req
+      req.user = decodedToken;
+      next();
+    });
+  } else {
+    res.sendStatus(401);
+  }
+};
+
 module.exports = {
   checkIfAuthenticated,
   checkIfOwnerAuthenticated,
+  checkIfAuthenticatedJWT,
 };

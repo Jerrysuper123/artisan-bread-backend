@@ -151,7 +151,7 @@ router.post(
       shippingAddress = `
         ${shippingAddressObj["country"]}, ${shippingAddressObj["line1"]}, ${shippingAddressObj["line2"]}, SG ${shippingAddressObj["postal_code"]}
       `;
-
+      //metadata is in json string, so we need to parse them into json data
       let removedCart = JSON.parse(stripeSession.metadata.orders);
       console.log("removed cart", removedCart);
       let userId = removedCart[0]["user_id"];
