@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
+const { checkIfAuthenticatedJWT } = require("../../middlewares");
 
 const generateAccessToken = (user) => {
   return jwt.sign(
@@ -45,6 +46,13 @@ router.post("/login", async (req, res) => {
       error: "Wrong email or password",
     });
   }
+});
+
+//base url/api/users/profile
+//if authenticated, req.user = decoded user info from JWT
+router.get("/profile", checkIfAuthenticatedJWT, async (req, res) => {
+  const user = req.user;
+  res.send(user);
 });
 
 module.exports = router;
