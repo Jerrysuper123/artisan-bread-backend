@@ -75,7 +75,6 @@ router.post("/login", async (req, res) => {
   loginForm.handle(req, {
     success: async (form) => {
       // process the login
-
       // ...find the user by email and password
       let user = await User.where({
         email: form.data.email,
