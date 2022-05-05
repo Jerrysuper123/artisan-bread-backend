@@ -1,16 +1,17 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const router = express.Router();
-
+const { checkIfAuthenticatedJWT } = require("../../middlewares");
 const CartServices = require("../../services/cart_services");
 const { createOrderItem } = require("../../dal/order_items");
 
 const Stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-router.get("/", async (req, res) => {
+router.get("/", checkIfAuthenticatedJWT, async (req, res) => {
   //   const cart = new CartServices(req.session.user.id);
   //default to 2 for now as Tom
-  const cart = new CartServices(2);
+  let user = req.user;
+  const cart = new CartServices(user.id);
 
   // get all the items from the cart
   let items = await cart.getCart();
@@ -41,7 +42,7 @@ router.get("/", async (req, res) => {
     meta.push({
       // can be req.session.userid
       id: item.get("id"),
-      user_id: 2,
+      user_id: user.id,
       quantity: item.get("quantity"),
       product_id: item.get("product_id"),
     });
