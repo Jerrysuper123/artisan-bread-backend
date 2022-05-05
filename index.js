@@ -107,6 +107,7 @@ const api = {
   search: require("./routes/API/searchEngine"),
   checkout: require("./routes/API/checkout"),
   users: require("./routes/API/users"),
+  order: require("./routes/API/order"),
 };
 const { checkIfAuthenticated } = require("./middlewares");
 async function main() {
@@ -123,6 +124,7 @@ async function main() {
   //express.json() is to parse incoming payload which is json from axios
   app.use("/api/products", express.json(), api.products);
   app.use("/api/cart", express.json(), api.shoppingCart);
+  app.use("/api/order", express.json(), api.order);
   app.use("/api/search", express.json(), api.search);
   // webhooks does not work well with express.json(), so do not inlude express.json() on this route
   app.use("/api/checkout", api.checkout);

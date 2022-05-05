@@ -13,10 +13,7 @@ const getOrderByUser = async (userId) => {
     })
     .fetch({
       require: false,
-      withRelated: [
-        // "product",
-        ["product", "product.type", "product.flavour", "user"],
-      ],
+      withRelated: ["product", "product.type", "product.flavour"],
     });
 };
 
