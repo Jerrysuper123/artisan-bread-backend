@@ -1,4 +1,5 @@
 const forms = require("forms");
+const { fill } = require("lodash");
 const fields = forms.fields;
 const validators = forms.validators;
 const widgets = forms.widgets;
@@ -109,9 +110,47 @@ const createLoginForm = () => {
   });
 };
 
+const createSearchOrderForm = () => {
+  return forms.create({
+    date: fields.string({
+      require: false,
+      errorAfterField: true,
+    }),
+    user_name: fields.string({
+      required: false,
+      errorAfterField: true,
+    }),
+    order_status: fields.string({
+      required: false,
+      errorAfterField: true,
+    }),
+    // flavour_id: fields.string({
+    //   label: "flavour",
+    //   required: true,
+    //   errorAfterField: true,
+    //   widget: widgets.select(),
+    //   choices: flavours,
+    // }),
+    // type_id: fields.string({
+    //   label: "type",
+    //   required: true,
+    //   errorAfterField: true,
+    //   widget: widgets.select(),
+    //   choices: types,
+    // }),
+    // ingredients: fields.string({
+    //   // required: true,
+    //   errorAfterField: true,
+    //   widget: widgets.multipleSelect(),
+    //   choices: ingredients,
+    // }),
+  });
+};
+
 module.exports = {
   createProductForm,
   createRegistrationForm,
   createLoginForm,
   bootstrapField,
+  createSearchOrderForm,
 };
