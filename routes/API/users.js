@@ -26,6 +26,23 @@ const getHashedPassword = (password) => {
 
 const { User } = require("../../models");
 
+//base url/api/users/register
+router.post("/register", async (req, res) => {
+  // console.log(req.body);
+  try {
+    const user = new User({
+      username: req.body.username,
+      password: getHashedPassword(req.body.password),
+      email: req.body.email,
+    });
+    await user.save();
+    res.sendStatus(200);
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(422);
+  }
+});
+
 //base url/api/users/login
 router.post("/login", async (req, res) => {
   let user = await User.where({
