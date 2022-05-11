@@ -86,7 +86,9 @@ router.post("/login", async (req, res) => {
         require: false,
       });
 
-      if (!user) {
+      //stop consumers logining in
+      if (!user || user.get("role") === null) {
+        // console.log(user);
         req.flash(
           "error_messages",
           "Sorry, the authentication details you provided does not work."
@@ -95,8 +97,6 @@ router.post("/login", async (req, res) => {
         //below should be
         res.redirect("/users/login");
       } else {
-        // check if the password matches
-
         if (user.get("password") === getHashedPassword(form.data.password)) {
           // add to the session that login succeed
 
