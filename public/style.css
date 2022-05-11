@@ -134,15 +134,48 @@ h4 {
 }
 
 .formImage {
-    width: 35%;
+    width: 25rem !important;
     height: 70%;
 }
+
 .adminForm {
-    width: 35%;
+    width: 25rem !important;
+    /* width: 35%; */
     height: 70%;
     background-color: white !important;
 }
 
+.regisFormImage {
+    width: 25rem !important;
+    height: 45rem;
+}
+
+.regisAdminForm {
+    width: 25rem !important;
+    /* width: 40%; */
+    height: 45rem;
+    background-color: white !important;
+}
+
+.registrationFooter {
+    font-size: 0.7rem;
+}
+
+.iconImage {
+    width: 6rem;
+    /* margin-bottom: -1.3rem; */
+    margin-left: 5rem;
+}
+
+/* navbar */
+
+.navbar a {
+    color: rgb(26, 26, 26) !important;
+}
+
+.navbar a:hover {
+    color: #d98e04 !important;
+}
 @media only screen and (max-width: 790px) {
     .adminForm {
         width: 90%;
@@ -151,8 +184,8 @@ h4 {
 .adminForm p {
     font-size: 0.8rem;
     color: #8aa6bf;
-    height: 7rem;
-    overflow-y: scroll;
+    min-height: 7rem;
+    /* overflow-y: scroll; */
 }
 
 .adminFormContainer {
@@ -163,4 +196,53 @@ h4 {
 .formBtn {
     width: 100%;
     padding: 0.5rem 0;
+}
+
+.loginIcon {
+    width: 7rem;
+}
+
+.CTAbanner {
+    background-color: rgb(250, 250, 250);
+    font-size: 0.8rem;
+    font-weight: 500;
+    /* text-align: center; */
+}
+
+.mainContainer {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-image: url("https://raw.githubusercontent.com/Jerrysuper123/artisanbreadsources/main/landingBG2.jpg");
+}
+
+.blockContent {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 1rem;
+}
+
+.staffPurchase {
+    font-size: 0.8rem !important;
+}
+
+.addProductBtn {
+    color: white;
+    border: none;
+    padding: 0.5rem 0.3rem;
+    border-radius: 0.3rem;
+    background-image: linear-gradient(to right, #ffa3ba, #fa3d6d);
+    text-decoration: none;
+}
+
+.resetSearchBtn {
+    color: white;
+    border: none;
+    padding: 0.6rem 0.4rem;
+    border-radius: 0.3rem;
+    background-color: #04bdad;
+    text-decoration: none;
+}
+
+.addProductBtn:hover {
+    color: white;
 }

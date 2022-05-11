@@ -1,11 +1,11 @@
 {{#extends "base"}}
 {{#block "content"}}
-<h4>Manage orders</h4>
+<h1 class="secondaryColor">Manage orders</h1>
 <table class="table mt-3">
     <form method="GET">
    {{{form}}}
-    <input type="submit" class="mb-3 mt-3 btn btn-primary" value="Search"/>
-    <a href="/orders" class="mb-3 ms-3 mt-3 btn btn-secondary">Reset</a>
+    <input type="submit" class="mb-3 mt-3 btn-sm addProductBtn" value="Search order"/>
+    <a href="/orders" class="mb-3 ms-3 mt-3 resetSearchBtn">Reset order</a>
     
 </form>
     <thead>
@@ -30,7 +30,7 @@
             <td>{{this.order_date}}</td>
             <td>{{this.product.name}}</td>
             <td>${{this.product.price}}</td>
-            <td>{{this.quantity}}</td>
+            <td>X{{this.quantity}}</td>
             <td>
                 {{#if this.product.image_url }}
                     <img src="{{this.product.image_url}}" style="width: 3rem"/>
@@ -53,12 +53,13 @@
                    <input type="hidden" value="{{../csrfToken}}" name="_csrf"/> 
                  
                     <input type="text" name="order_status" value="{{this.order_status}}" style="width:7rem" /> 
-                    <input type="submit" value="update status" class="btn btn-success btn-sm" />
+                    <input type="submit" value="update" class="resetSearchBtn btn-sm mt-2" />
+                    {{!-- <button class="secondaryColor"><i class="fa-solid fa-pen-to-square"></i></button> --}}
                 </form>
             </td>
             <td>
                 {{!-- <a href="/products/{{this.id}}/update">update</a> --}}
-                <a href="/orders/{{this.id}}/delete">delete</a>
+                <a href="/orders/{{this.id}}/delete" class="accentThreeColor"><i class="fa-solid fa-trash-can"></i></a>
             </td>
         </tr>
         {{/each}}

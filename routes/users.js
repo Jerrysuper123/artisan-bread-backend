@@ -139,8 +139,9 @@ router.get("/logout", (req, res) => {
   let name = "";
   if (req.session.user) {
     name = req.session.user.username;
+    req.session.user = null;
   }
-  req.session.user = null;
+
   req.flash("success_messages", `Goodbye ${name}!`);
   res.redirect("/users/login");
 });

@@ -1,18 +1,24 @@
 {{#extends "base"}}
 {{#block "content"}}
 
-    <h4>Manage products</h4>
+    <div class="d-flex align-items-center justify-content-between">
+            <h1 class="secondaryColor">Manage products</h1>
 
-        <a href="/products/create" class="mt-2">
+    <section>
+         <a href="/products/create" class="mt-2 btn-sm addProductBtn">
         <i class="fa-solid fa-circle-plus">
         </i>
         <span class="ms-1">Add a product</span>
         </a>
     {{!-- <a class="ms-5" href="/users/logout">log out</a> --}}
-    <a class="ms-5" href="/cart">Cart</a>
-<table class="table mt-3">
-    
+    <a class="ms-5 btn btn-success btn-sm" href="/cart">
+    <i class="fa-solid fa-basket-shopping me-2"></i>
+    Staff cart</a>
+    </section>
+    </div>
 
+       
+<table class="table mt-5">
     <thead>
         <tr>
             <th>ID</th>
@@ -24,6 +30,7 @@
             <th>Ingredient</th>
             <th>Image</th>
             <th>Action</th>
+            <th>Staff</th>
         </tr>
     </thead>
     <tbody>
@@ -36,7 +43,7 @@
             <td>{{this.flavour.flavour}}</td>
             <td>{{this.type.type}}</td>
             <td>{{#each this.ingredients}}
-                <span class="badge bg-primary">{{this.ingredient}}</span>
+                <span> <i class="fa-solid fa-circle-check me-1"></i>{{this.ingredient}}</span>
                 {{/each}}
             </td>
             <td>
@@ -48,9 +55,11 @@
             </td>
             <td>
                 {{!--add to cart btn  --}}
-                <a href="/cart/{{this.id}}/add" class="btn btn-success btn-sm">Add to cart</a>
-                <a href="/products/{{this.id}}/update">update</a>
-                <a href="/products/{{this.id}}/delete">delete</a>
+                <a href="/products/{{this.id}}/update" class="secondaryColor"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a href="/products/{{this.id}}/delete" class="ms-2 accentThreeColor"><i class="fa-solid fa-trash-can"></i></a>
+            </td>
+            <td>
+                     <a href="/cart/{{this.id}}/add" class="btn btn-success staffPurchase">purchase</a>
             </td>
         </tr>
         {{/each}}
