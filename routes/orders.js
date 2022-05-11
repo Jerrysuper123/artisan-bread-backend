@@ -51,9 +51,11 @@ router.get("/", async (req, res) => {
           "%" + req.query.user_name + "%"
         );
         let userRow = await userCollection.fetch();
-        let userId = userRow.toJSON()[0].id;
-        // console.log(userId);
-        o = o.where("user_id", "=", userId);
+        if (userRow.toJSON()[0].id) {
+          let userId = userRow.toJSON()[0].id;
+          // console.log(userId);
+          o = o.where("user_id", "=", userId);
+        }
       }
       let orders = await o.fetch({
         withRelated: ["product", "product.type", "product.flavour", "user"],
