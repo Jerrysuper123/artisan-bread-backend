@@ -14,7 +14,10 @@ const getHashedPassword = (password) => {
 // import in the User model
 const { User } = require("../models");
 
-const { checkIfOwnerAuthenticated } = require("../middlewares");
+const {
+  checkIfOwnerAuthenticated,
+  checkIfManagerAuthenticated,
+} = require("../middlewares");
 
 const {
   createRegistrationForm,
@@ -26,7 +29,7 @@ router.get("/", (req, res) => {
   res.render("users/users");
 });
 
-router.get("/register", (req, res) => {
+router.get("/register", checkIfOwnerAuthenticated, (req, res) => {
   // display the registration form
   const registerForm = createRegistrationForm();
   res.render("users/register", {
@@ -34,7 +37,7 @@ router.get("/register", (req, res) => {
   });
 });
 
-router.post("/register", (req, res) => {
+router.post("/register", checkIfOwnerAuthenticated, (req, res) => {
   const registerForm = createRegistrationForm();
 
   registerForm.handle(req, {

@@ -7,7 +7,10 @@ const {
 } = require("../dal/products");
 const { Product, Flavour, Type, Ingredient } = require("../models");
 const { bootstrapField, createProductForm } = require("../forms");
-const { checkIfOwnerAuthenticated } = require("../middlewares");
+const {
+  checkIfOwnerAuthenticated,
+  checkIfManagerAuthenticated,
+} = require("../middlewares");
 
 /*retrieve all products and display it */
 router.get("/", async (req, res) => {
@@ -159,6 +162,7 @@ router.post("/:product_id/update", async (req, res) => {
 });
 
 /*delete product */
+//only owner can delete product
 router.get("/:product_id/delete", async (req, res) => {
   let product;
   try {
@@ -176,20 +180,24 @@ router.get("/:product_id/delete", async (req, res) => {
   });
 });
 
-router.post("/:product_id/delete", async (req, res) => {
-  let product;
-  try {
-    product = await Product.where({
-      id: req.params.product_id,
-    }).fetch({
-      require: true,
-    });
-  } catch (e) {
-    console.log(e);
-  }
+router.post(
+  "/:product_id/delete",
+  checkIfOwnerAuthenticated,
+  async (req, res) => {
+    let product;
+    try {
+      product = await Product.where({
+        id: req.params.product_id,
+      }).fetch({
+        require: true,
+      });
+    } catch (e) {
+      console.log(e);
+    }
 
-  await product.destroy();
-  res.redirect("/products");
-});
+    await product.destroy();
+    res.redirect("/products");
+  }
+);
 
 module.exports = router;

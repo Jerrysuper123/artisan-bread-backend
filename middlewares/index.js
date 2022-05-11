@@ -11,7 +11,7 @@ const checkIfAuthenticated = (req, res, next) => {
 };
 
 const checkIfOwnerAuthenticated = (req, res, next) => {
-  console.log("tom role", req.session.user.role);
+  // console.log("tom role", req.session.user.role);
   if (req.session.user && req.session.user.role === "owner") {
     //next middleware, there is not middleware, then show the form
     next();
@@ -21,6 +21,17 @@ const checkIfOwnerAuthenticated = (req, res, next) => {
       "You do not have right access to this. Approach shop owner for this"
     );
     res.redirect("/products");
+  }
+};
+
+const checkIfManagerAuthenticated = (req, res, next) => {
+  // console.log("tom role", req.session.user.role);
+  if (req.session.user && req.session.user.role === "manager") {
+    //next middleware, there is not middleware, then show the form
+    next();
+  } else {
+    req.flash("error_messages", "You do not have right access to this.");
+    res.redirect("/users/login");
   }
 };
 
@@ -49,4 +60,5 @@ module.exports = {
   checkIfAuthenticated,
   checkIfOwnerAuthenticated,
   checkIfAuthenticatedJWT,
+  checkIfManagerAuthenticated,
 };

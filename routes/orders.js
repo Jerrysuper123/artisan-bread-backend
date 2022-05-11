@@ -7,6 +7,7 @@ const {
   removeFromOrderByOrderId,
   updateOrderStatus,
 } = require("../dal/order_items");
+const { checkIfOwnerAuthenticated } = require("../middlewares/index");
 
 router.get("/", async (req, res) => {
   // console.log(allOrder.toJSON());
@@ -68,7 +69,7 @@ router.get("/", async (req, res) => {
   });
 });
 
-router.get("/:orderId/delete", async (req, res) => {
+router.get("/:orderId/delete", checkIfOwnerAuthenticated, async (req, res) => {
   await removeFromOrderByOrderId(req.params.orderId);
   req.flash("success_messages", "Order item has been removed");
   res.redirect("/orders");
