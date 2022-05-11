@@ -210,6 +210,7 @@ h4 {
 }
 
 .mainContainer {
+    overflow-x: scroll;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -243,6 +244,14 @@ h4 {
     text-decoration: none;
 }
 
+.resetSearchBtn:hover {
+    color: white;
+}
+
 .addProductBtn:hover {
     color: white;
 }
+
+/* .tableForm {
+    overflow-x: scroll !important;
+} */
