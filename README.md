@@ -1,7 +1,7 @@
 # Artisan BREAD Admin Site
-This is the back end admin site support front-end [ecommerce site](https://chic-crostata-11c4b4.netlify.app.
+This is the back end admin site support front-end [ecommerce site](https://chic-crostata-11c4b4.netlify.app).
 
-The website must be fully functional for the business owner to manage its online business. Customers are able to register and log in as users, adding to cart and checking out. On the admin site, the business owner is able to manage the order and notify customers when the order is ready to dispatch.
+The website must be fully functional for the business owner to manage its online business. On the admin site, the business owner is able to manage the order and notify customers when the order is ready to dispatch.
 
 - Access the live back-end admin page [here](https://artisanbread.herokuapp.com).
 
@@ -14,13 +14,13 @@ Back-end admin site
 4. Tiered access for different admin users
 
 - owner is able to access all pages on the admin site
-- manager is restricted on product deletion, order deletion and registering new admin user
+- manager is granted access to all, but restricted on product deletion, order deletion and registering new admin user
 
 ![site map](https://github.com/Jerrysuper123/artisanbreadsources/blob/main/adminSiteMap.png?raw=true
 )
 
 # admin skeleton
-Based on the site map, access admin wireframe here [here](https://github.com/Jerrysuper123/artisanbreadsources/blob/main/bandEndSkeleton.pdf
+Based on the site map, access admin wireframe [here](https://github.com/Jerrysuper123/artisanbreadsources/blob/main/bandEndSkeleton.pdf
 )
 
 # Database design
@@ -33,10 +33,10 @@ Based on the site map, access admin wireframe here [here](https://github.com/Jer
 - Cart_item to User and Product
 - Order_item to User and Product
 
-ERA diagram
+## ERA diagram
 ![ERA digram](https://github.com/Jerrysuper123/artisanbreadsources/blob/main/ERA%20Diagram.png?raw=true)
 
-Mysql database design
+## Mysql database design
 ![database design](https://raw.githubusercontent.com/Jerrysuper123/artisanbreadsources/main/artisan_bread.png)
 
 # Restful API
@@ -56,16 +56,16 @@ POST
 https://artisanbread.herokuapp.com/api/users/register
 ```
 
-
 ## Customer log in
-
-Upon successful verification, the server will send over a Json Web Token. 
+Customers could login through below:
 
 POST
 ```
 https://artisanbread.herokuapp.com/api/users/login
 ```
->From this point onwards, below end_points have to been consumed with a JSON Web Token sent over to server for verification purpose.
+Upon successful login, the server will send over a Json Web Token (JWT). 
+From this point onwards, below end_points have to been consumed with a JWT.
+
 
 ## Customer profile
 
@@ -76,14 +76,16 @@ https://artisanbread.herokuapp.com/api/users/profile
 
 ## Product
 
-retrieva all products in database
+To retrieva all products from the database:
+
 GET
 ```
 https://artisanbread.herokuapp.com/api/products
 ```
+
 ## Product search engine
 
-Combining with multiple parameters, making sophisticated query is possible.
+Combining with multiple parameters, sophisticated product query is possible.
 
 GET
 | parameter  | value | usage  | 
@@ -94,7 +96,7 @@ GET
 | Ingredient ID  | numeric |search by Ingredient IDs (multi-select)  |
 
 ## Cart
-Get the user's cart
+Get current user's cart
 GET
 ```
 https://artisanbread.herokuapp.com/api/cart
@@ -120,30 +122,28 @@ https://artisanbread.herokuapp.com/api/cart/:product_id/quantity/update
 
 # Order
 
-retrieve current user's order
+To retrieve current user's order:
 GET
 ```
 https://artisanbread.herokuapp.com/api/order
 ```
 
 # Checkout
+The checkout is processed by Stripe. Once successful checkout, our server will send over both Publishable ID and Session ID for front-end react App to redirect to Stripe checkout page.
 
-Send over publishable and session ID for redirect on react front
 GET
 ```
 https://artisanbread.herokuapp.com/api/checkout
 ```
 
-# Strip webhooks
+# Stripe webhooks
 
-Secure, we verify if it is coming from Stripe
+Upon successful checkout, Stripe will consume below end point, sending to our server the checkout information.
+
 POST
 ```
 https://artisanbread.herokuapp.com/api/checkout/process_payment
 ```
-
-Webhooks for Stripe to infrom us, but this is not part of the API design.
-
 
 # Testing
 Testing is done for all http methods using [Advanced Rest Client](https://install.advancedrestclient.com/install).
