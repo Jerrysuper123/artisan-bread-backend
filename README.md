@@ -6,7 +6,7 @@ The website must be fully functional for the business owner to manage its online
 - Access the live back-end admin page [here](https://artisanbread.herokuapp.com).
 
 
-# admin site map
+# Admin site map
 Back-end admin site
 1. Admin user log in/register
 2. Create, update, delete product catalogue
@@ -19,7 +19,7 @@ Back-end admin site
 ![site map](https://github.com/Jerrysuper123/artisanbreadsources/blob/main/adminSiteMap.png?raw=true
 )
 
-# admin skeleton
+# Admin page wireframe
 Based on the site map, access admin wireframe [here](https://github.com/Jerrysuper123/artisanbreadsources/blob/main/bandEndSkeleton.pdf
 )
 
@@ -97,24 +97,28 @@ GET
 
 ## Cart
 Get current user's cart
+
 GET
 ```
 https://artisanbread.herokuapp.com/api/cart
 ```
 
 Add to cart
+
 GET
 ```
 https://artisanbread.herokuapp.com/api/cart/:product_id/add
 ```
 
 Remove from cart
+
 GET
 ```
 https://artisanbread.herokuapp.com/api/cart/:product_id/remove
 ```
 
 Update cart quantity
+
 POST
 ```
 https://artisanbread.herokuapp.com/api/cart/:product_id/quantity/update
@@ -123,6 +127,7 @@ https://artisanbread.herokuapp.com/api/cart/:product_id/quantity/update
 # Order
 
 To retrieve current user's order:
+
 GET
 ```
 https://artisanbread.herokuapp.com/api/order
@@ -138,7 +143,7 @@ https://artisanbread.herokuapp.com/api/checkout
 
 # Stripe webhooks
 
-Upon successful checkout, Stripe will consume below end point, sending to our server the checkout information.
+Upon successful checkout, Stripe will consume below end point, sending over to our server the checkout information.
 
 POST
 ```
