@@ -1,102 +1,152 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Artisan BREAD Admin Site
+This is the back end admin site support front-end [ecommerce site](https://chic-crostata-11c4b4.netlify.app.
 
-Welcome USER_NAME,
+The website must be fully functional for the business owner to manage its online business. Customers are able to register and log in as users, adding to cart and checking out. On the admin site, the business owner is able to manage the order and notify customers when the order is ready to dispatch.
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. The last update to this file was: **July 2, 2021**
+- Access the live back-end admin page [here](https://artisanbread.herokuapp.com).
 
-## Gitpod Reminders
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+# admin site map
+Back-end admin site
+1. Admin user log in/register
+2. Create, update, delete product catalogue
+3. Manage order
+4. Tiered access for different admin users
 
-`python3 -m http.server`
+- owner is able to access all pages on the admin site
+- manager is restricted on product deletion, order deletion and registering new admin user
 
-A blue button should appear to click: _Make Public_,
+![site map](https://github.com/Jerrysuper123/artisanbreadsources/blob/main/adminSiteMap.png?raw=true
+)
 
-Another blue button should appear to click: _Open Browser_.
+# admin skeleton
+Based on the site map, access admin wireframe here [here](https://github.com/Jerrysuper123/artisanbreadsources/blob/main/bandEndSkeleton.pdf
+)
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+# Database design
+<em>One to many relationship</em>
+- Product to Type
+- Product to Flavour
 
-A blue button should appear to click: _Make Public_,
+<em>Many to many relationship</em>
+- Product to Ingredient
+- Cart_item to User and Product
+- Order_item to User and Product
 
-Another blue button should appear to click: _Open Browser_.
+ERA diagram
+![ERA digram](https://github.com/Jerrysuper123/artisanbreadsources/blob/main/ERA%20Diagram.png?raw=true)
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+Mysql database design
+![database design](https://raw.githubusercontent.com/Jerrysuper123/artisanbreadsources/main/artisan_bread.png)
 
-To log into the Heroku toolbelt CLI:
+# Restful API
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+Besides admin page to manage product catalogue and orders, we built a restful API, to be consumed by the front-end react app.
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
-
-------
-
-## Release History
-
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
-
-**July 2 2021:** Remove extensions that are not available in Open VSX.
-
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
-
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
-
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
-
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
-
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
-
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
-
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
-
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
-
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
-
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
-
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
-
-------
-
-## FAQ about the uptime script
-
-**Why have you added this script?**
-
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
-
-**How will this affect me?**
-
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
-
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
-
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
-
-**So….?**
-
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
-
-**Can I opt out?**
-
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
-
+## Base end_point deployed on Heroku
 ```
-pkill uptime.sh
-rm .vscode/uptime.sh
+https://artisanbread.herokuapp.com/api
 ```
 
-**Anything more?**
+## Customer registration
+Customers could register their own accounts, using below end_point:
 
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+POST
+```
+https://artisanbread.herokuapp.com/api/users/register
+```
 
----
 
-Happy coding!
+## Customer log in
+
+Upon successful verification, the server will send over a Json Web Token. 
+
+POST
+```
+https://artisanbread.herokuapp.com/api/users/login
+```
+>From this point onwards, below end_points have to been consumed with a JSON Web Token sent over to server for verification purpose.
+
+## Customer profile
+
+GET
+```
+https://artisanbread.herokuapp.com/api/users/profile
+```
+
+## Product
+
+retrieva all products in database
+GET
+```
+https://artisanbread.herokuapp.com/api/products
+```
+## Product search engine
+
+Combining with multiple parameters, making sophisticated query is possible.
+
+GET
+| parameter  | value | usage  | 
+| ------------- | ------------- | ------------- |
+| name  | string  | search by product title  |
+| type ID  | numeric  | search by product type ID  |
+| flavour ID  | numeric |search by flavour ID  |
+| Ingredient ID  | numeric |search by Ingredient IDs (multi-select)  |
+
+## Cart
+Get the user's cart
+GET
+```
+https://artisanbread.herokuapp.com/api/cart
+```
+
+Add to cart
+GET
+```
+https://artisanbread.herokuapp.com/api/cart/:product_id/add
+```
+
+Remove from cart
+GET
+```
+https://artisanbread.herokuapp.com/api/cart/:product_id/remove
+```
+
+Update cart quantity
+POST
+```
+https://artisanbread.herokuapp.com/api/cart/:product_id/quantity/update
+```
+
+# Order
+
+retrieve current user's order
+GET
+```
+https://artisanbread.herokuapp.com/api/order
+```
+
+# Checkout
+
+Send over publishable and session ID for redirect on react front
+GET
+```
+https://artisanbread.herokuapp.com/api/checkout
+```
+
+# Strip webhooks
+
+Secure, we verify if it is coming from Stripe
+POST
+```
+https://artisanbread.herokuapp.com/api/checkout/process_payment
+```
+
+Webhooks for Stripe to infrom us, but this is not part of the API design.
+
+
+# Testing
+Testing is done for all http methods using [Advanced Rest Client](https://install.advancedrestclient.com/install).
+
+# Deployment steps
+The deployment is done through [Heroku](https://devcenter.heroku.com/articles/git#deploy-your-code).
