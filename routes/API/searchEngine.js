@@ -61,13 +61,27 @@ router.post("/", async (req, res) => {
     );
   }
 
-  let products = await q.fetch({
+  // let products = await q.fetch({
+  //   withRelated: ["flavour", "type", "ingredients"],
+  // });
+
+  // res.send({
+  //   products: products.toJSON(),
+  // });
+
+  let products = await q.fetchPage({
+    pageSize: 8,
+    page: 1,
     withRelated: ["flavour", "type", "ingredients"],
   });
 
+  console.log(products);
+
   res.send({
     products: products.toJSON(),
+    pagination: products.pagination,
   });
+
   return res.status(200).json;
 });
 module.exports = router;

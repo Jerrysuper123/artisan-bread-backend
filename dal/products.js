@@ -1,14 +1,14 @@
 const { Product, Flavour, Type, Ingredient } = require("../models");
 
-// const getAllProducts = async () => {
-//   return await Product.collection().fetch({
-//     withRelated: ["flavour", "type", "ingredients"],
-//   });
-// };
+const getAllProductsWithoutPage = async () => {
+  return await Product.collection().fetch({
+    withRelated: ["flavour", "type", "ingredients"],
+  });
+};
 
 const getAllProducts = async (pageNumber) => {
   return await Product.collection().fetchPage({
-    pageSize: 6,
+    pageSize: 8,
     page: pageNumber,
     withRelated: ["flavour", "type", "ingredients"],
   });
@@ -40,4 +40,5 @@ module.exports = {
   fetchAllTypes,
   fetchAllIngredients,
   getAllProducts,
+  getAllProductsWithoutPage,
 };

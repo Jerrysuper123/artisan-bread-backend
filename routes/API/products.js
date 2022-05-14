@@ -8,6 +8,7 @@ const {
   fetchAllFlavours,
   fetchAllIngredients,
   fetchAllTypes,
+  getAllProductsWithoutPage,
 } = require("../../dal/products");
 
 const fetchProductForm = async () => {
@@ -19,17 +20,17 @@ const fetchProductForm = async () => {
 };
 
 router.get("/", async (req, res) => {
-  // let page = req.params.page;
-  console.log("get page number", req.query.page);
   let pageNumber = parseInt(req.query.page);
-  // console.log(page);
-  // res.send(await getAllProducts(page));
-  let pageResult = await getAllProducts(pageNumber);
-  // console.log(pageResult.pagination);
-  res.send({
-    pageResult: pageResult,
-    pagination: pageResult.pagination,
-  });
+  //if there is page number fetch by page, otherwise, fetch all products
+  if (pageNumber) {
+    let pageResult = await getAllProducts(pageNumber);
+    res.send({
+      pageResult: pageResult,
+      pagination: pageResult.pagination,
+    });
+  } else {
+    res.send(await getAllProductsWithoutPage());
+  }
 });
 
 router.post("/", async (req, res) => {
