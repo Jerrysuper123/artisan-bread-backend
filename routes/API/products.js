@@ -19,7 +19,17 @@ const fetchProductForm = async () => {
 };
 
 router.get("/", async (req, res) => {
-  res.send(await getAllProducts());
+  // let page = req.params.page;
+  console.log("get page number", req.query.page);
+  let pageNumber = parseInt(req.query.page);
+  // console.log(page);
+  // res.send(await getAllProducts(page));
+  let pageResult = await getAllProducts(pageNumber);
+  // console.log(pageResult.pagination);
+  res.send({
+    pageResult: pageResult,
+    pagination: pageResult.pagination,
+  });
 });
 
 router.post("/", async (req, res) => {

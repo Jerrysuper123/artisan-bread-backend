@@ -1,7 +1,15 @@
 const { Product, Flavour, Type, Ingredient } = require("../models");
 
-const getAllProducts = async () => {
-  return await Product.collection().fetch({
+// const getAllProducts = async () => {
+//   return await Product.collection().fetch({
+//     withRelated: ["flavour", "type", "ingredients"],
+//   });
+// };
+
+const getAllProducts = async (pageNumber) => {
+  return await Product.collection().fetchPage({
+    pageSize: 6,
+    page: pageNumber,
     withRelated: ["flavour", "type", "ingredients"],
   });
 };
