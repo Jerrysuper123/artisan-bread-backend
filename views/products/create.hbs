@@ -1,17 +1,17 @@
 {{#extends 'base'}}
 
 {{#block 'content'}}
-<h1>Create New Product</h1>
+<h1 class="secondaryColor">Create New Product</h1>
 <form method="POST">
     <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
     {{{form}}}
 
     {{!-- upload btn to upload img, and display img before uploading --}}
-    <div>
-      <a href="#" class="mt-3 btn btn-primary" id="upload_widget">Upload</a>
+    <div class="mt-3">
+      <a href="#" class=" addProductBtn" id="upload_widget">Upload</a>
       <img src="" style="display:none" id="uploaded_image"/>
     </div>
-    <input type="submit" value="Add Product" class="mt-3 btn btn-primary"/>
+    <input type="submit" value="Add Product" class="mt-3 addProductBtn"/>
 </form>
 {{/block}}
 

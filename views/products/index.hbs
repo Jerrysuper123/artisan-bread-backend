@@ -4,16 +4,17 @@
     <div class="d-flex align-items-center justify-content-between">
             <h1 class="secondaryColor">Manage products</h1>
 
-    <section>
-         <a href="/products/create" class="mt-2 btn-sm addProductBtn">
-        <i class="fa-solid fa-circle-plus">
-        </i>
-        <span class="ms-1">Add a product</span>
+    <section class="d-flex flex-column">
+         <a href="/products/create" class="btn-sm addProductBtn pdBtnWidth d-flex align-items-center">
+            <i class="fa-solid fa-circle-plus">
+            </i>
+            <span class="ms-1">Add product</span>
         </a>
     {{!-- <a class="ms-5" href="/users/logout">log out</a> --}}
-    <a class="ms-5 btn btn-success btn-sm" href="/cart">
-    <i class="fa-solid fa-basket-shopping me-2"></i>
-    Staff cart</a>
+        <a class="mt-2 btn btn-success d-flex align-items-center pdBtnWidth" href="/cart">
+            <i class="fa-solid fa-basket-shopping me-2"></i>
+            <span>Staff cart</span>
+        </a>
     </section>
     </div>
 

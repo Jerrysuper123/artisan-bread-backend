@@ -264,3 +264,7 @@ h4 {
 .tableContent {
     overflow-x: scroll;
 }
+
+.pdBtnWidth {
+    width: 8rem;
+}
