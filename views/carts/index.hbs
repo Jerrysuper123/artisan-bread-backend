@@ -1,8 +1,9 @@
 {{#extends 'base'}}
 
 {{#block 'content'}}
+    <main class="mainContent">
 <h1>My shopping cart</h1>
-<a href="/cart/clearcart">Clear cart</a>
+<a href="/cart/clearcart" class="btn btn-danger">Clear cart</a>
 <ul class="list-group">
     {{#each shoppingCart}}
     <li class="list-group-item my-3">
@@ -25,7 +26,7 @@
     {{/each}}
 </ul>
 
-
+</main>
 {{/block}}
 
 {{/extends}}

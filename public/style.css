@@ -233,6 +233,7 @@ h4 {
     border-radius: 0.3rem;
     background-image: linear-gradient(to right, #ffa3ba, #fa3d6d);
     text-decoration: none;
+    font-size: 1rem;
 }
 
 .resetSearchBtn {
@@ -255,3 +256,11 @@ h4 {
 /* .tableForm {
     overflow-x: scroll !important;
 } */
+
+.mainContent {
+    min-height: 60vh;
+}
+
+.tableContent {
+    overflow-x: scroll;
+}
